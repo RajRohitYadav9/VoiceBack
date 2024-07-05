@@ -19,7 +19,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-sess = Session(app)
+# sess = Session(app)
 
 
 @app.route('/', methods=['GET'])
