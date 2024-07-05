@@ -13,6 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from collections import Counter
 import re
+from flask_cors import cross_origin
 
 
 
@@ -23,6 +24,7 @@ import re
 
 
 @app.route('/register', methods=['POST'])
+@cross_origin()
 def register():
     data = request.get_json()
     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
@@ -32,6 +34,7 @@ def register():
     return jsonify({'message': 'User registered successfully'}), 201
 
 @app.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()
@@ -41,6 +44,7 @@ def login():
     return jsonify({'message': 'Login failed'}), 401
 
 @app.route('/logout', methods=['POST'])
+@cross_origin()
 def logout():
     session.pop('user_id', None)
     return jsonify({'message': 'Logged out successfully'}), 200
@@ -49,6 +53,7 @@ def logout():
 
 
 @app.route('/transcribe', methods=['POST'])
+@cross_origin()
 def transcribe():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
@@ -91,6 +96,7 @@ def transcribe():
 
 
 @app.route('/history', methods=['GET'])
+@cross_origin()
 def history():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
@@ -107,6 +113,7 @@ def history():
 
 
 @app.route('/word_frequencies', methods=['GET'])
+@cross_origin()
 def word_frequencies():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
@@ -143,6 +150,7 @@ def word_frequencies():
 
 
 @app.route('/unique_phrases', methods=['GET'])
+@cross_origin()
 def unique_phrases():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
@@ -176,6 +184,7 @@ def unique_phrases():
 
 
 @app.route('/similar_users', methods=['GET'])
+@cross_origin()
 def similar_users():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
@@ -222,6 +231,7 @@ def similar_users():
 
 
 @app.route('/check-auth', methods=['GET'])
+@cross_origin()
 def check_auth():
     if 'user_id' in session:
         return jsonify({'isAuthenticated': True}), 200
