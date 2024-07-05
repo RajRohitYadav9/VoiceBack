@@ -15,6 +15,7 @@ CORS(app, supports_credentials=True, resources={
 app.config['SECRET_KEY'] = 'my_secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
