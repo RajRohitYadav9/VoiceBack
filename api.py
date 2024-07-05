@@ -225,6 +225,7 @@ def similar_users():
 @app.route('/check-auth', methods=['GET'])
 def check_auth():
     if 'user_id' in session:
+        print(session['user_id'])
         return jsonify({'isAuthenticated': True}), 200
     else:
         return jsonify({'isAuthenticated': False}), 401
