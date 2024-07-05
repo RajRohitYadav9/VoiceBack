@@ -22,7 +22,7 @@ from flask_cors import cross_origin
 
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -32,6 +32,7 @@ def register():
     db.session.commit()
     return jsonify({'message': 'User registered successfully'}), 201
 
+@cross_origin(supports_credentials=True)
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -41,6 +42,7 @@ def login():
         return jsonify({'message': 'Login successful'}), 200
     return jsonify({'message': 'Login failed'}), 401
 
+@cross_origin(supports_credentials=True)
 @app.route('/logout', methods=['POST'])
 def logout():
     session.pop('user_id', None)
@@ -48,7 +50,7 @@ def logout():
 
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
     if 'user_id' not in session:
@@ -90,7 +92,7 @@ def transcribe():
     }), 200
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/history', methods=['GET'])
 def history():
     if 'user_id' not in session:
@@ -106,7 +108,7 @@ def history():
     return jsonify({'history': history}), 200
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/word_frequencies', methods=['GET'])
 def word_frequencies():
     if 'user_id' not in session:
@@ -142,7 +144,7 @@ def word_frequencies():
 
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/unique_phrases', methods=['GET'])
 def unique_phrases():
     if 'user_id' not in session:
@@ -175,7 +177,7 @@ def unique_phrases():
         'user_unique_phrases': top_user_phrases
     }), 200
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/similar_users', methods=['GET'])
 def similar_users():
     if 'user_id' not in session:
@@ -221,7 +223,7 @@ def similar_users():
     return jsonify({'most_similar_users': response}), 200
 
 
-
+@cross_origin(supports_credentials=True)
 @app.route('/check-auth', methods=['GET'])
 def check_auth():
     if 'user_id' in session:
